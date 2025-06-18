@@ -1,0 +1,183 @@
+<%- include('../layouts/header1') %>
+
+
+
+			<main class="content">
+					<!-- Modals -->
+<!-- Add Menu Modal -->
+<div class="modal fade" id="AddModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+	  <div class="modal-content">
+		<div class="modal-header">
+		  <h5 class="modal-title">Add Item</h5>
+		  <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+		  </button>
+		</div>
+		<div class="modal-body">
+			<form action="/menu/addMenu" method="POST" enctype="multipart/form-data">
+				<input required type="text" class="form-control" placeholder="Name" name="name" required>
+				<br>
+				<input required type="number" class="form-control" placeholder="Full Price" name="full_price" required>
+				<br>
+				<input required type="number" class="form-control" placeholder="Half Price" name="half_price" required>
+				<br>
+				<input required type="file" class="form-control" name="image" required>
+				<br>
+				<img src="" width="100px" id="add-image" alt="">
+				<br>
+				<textarea required class="form-control" rows="2" placeholder="Description" name="description" required></textarea>
+				<br>
+				<select required class="form-select mb-3" name="available" required>
+				  <option value="">Select availability</option>
+				  <option value="Available">Available</option>
+				  <option value="Not Available">Not Available</option>
+				</select>
+				<select required class="form-select mb-3" name="catId" required>
+					<% categories.forEach(function(item) { %>
+					<option value="<%= item._id %>"><%= item.name %></option>
+					<% }); %>
+				  </select>
+			  
+		</div>
+		<div class="modal-footer">
+			<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+			<button type="submit" class="btn btn-primary">Add Menu Item</button>
+		</div>
+	  </div>
+	</form>
+	</div>
+  </div>
+<!-- End Add Menu Modal -->
+
+<!-- Update Modal -->
+<!-- Update Menu Modal -->
+<div class="modal fade" id="UpdateModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Update Item</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="updateForm" action="/menu/update-menu" method="post" enctype="multipart/form-data">
+                    <input type="hidden" name="id" id="updateId">
+                    <input required type="text" class="form-control" id="updateName" placeholder="Name" name="name" required>
+                    <br>
+                    <input required type="number" class="form-control" id="updateFullPrice" placeholder="Full Price" name="full_price" required>
+                    <br>
+                    <input required type="number" class="form-control" id="updateHalfPrice" placeholder="Half Price" name="half_price" required>
+                    <br>
+                    <input type="file" class="form-control" name="image">
+                    <br>
+                    <img src="" width="100px" id="update-image" alt="">
+                    <br>
+                    <textarea required class="form-control" rows="2" id="updateDescription" placeholder="Description" name="description" required></textarea>
+                    <br>
+                    <select required class="form-select mb-3" id="updateAvailability" name="available" required>
+                        <option value="">Select availability</option>
+                        <option value="Available">Available</option>
+                        <option value="Not Available">Not Available</option>
+                    </select>
+					<br>
+					<select required class="form-select mb-3" name="catId" required>
+						<% categories.forEach(function(item) { %>
+						<option value="<%= item._id %>"><%= item.name %></option>
+						<% }); %>
+					  </select>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Update Menu Item</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- End Update Menu Modal -->
+
+<!-- End Update Modal -->
+
+	<!-- Modals End -->
+				
+				<div class="container-fluid p-0">
+
+					<h1 class="h3 mb-3">Menu</h1>
+					
+					
+					<button type="button" data-bs-toggle="modal" data-bs-target="#AddModal" style="width: 200px;height:40px;" class="btn btn-primary">
+						Add Item <i class="fa-solid fa-bowl-food" style="font-size: large;"></i>
+					</button>
+					<br>
+<br>
+					<div class="row">
+						<div class="col-12">
+							<div class="card">
+								<div class="card-header">
+									<table id="example" class="table table-striped" style="width:100%">
+										<thead>
+											<tr>
+												<th>Item Name</th>
+      <th>Description</th>
+      <th>Half Price</th>
+      <th>Full Price</th>
+      <th>Available</th>
+      <th>Image</th>
+	  <th>Category</th>
+      <th>Date Added</th>
+	  <th>Action</th>
+	  <th>Reviews</th>
+											</tr>
+										</thead>
+										<tbody>
+											
+											<% menuItems.forEach(function(item) { %>
+												<tr>
+												  <td data-name="%= item.name %>"><%= item.name %></td>
+												  <td data-desciption="<%= item.description %>"><%= item.description %></td>
+												  <td data-hprice="<%= item.half_price %>">$<%= item.half_price %></td>
+												  <td data-fprice="<%= item.full_price %>">$<%= item.full_price %></td>
+												  <td data-avail="<%= item.available ? 'Yes' : 'No' %>"><%= item.available ? 'Yes' : 'No' %></td>
+												  <td>
+													<img src="/uploads/<%= item.image %>" alt="<%= item.name %>" style="width: 100px; height: auto;" />
+												</td>
+												<td><%= item.category ? item.category.name : 'No Category' %></td> <!-- Check if category exists -->
+												<td><%= item.createdAt.toDateString() %></td>
+													<td>
+														<a href="#" onclick="populateUpdateModal('<%= item._id %>', '<%= item.name %>', '<%= item.full_price %>', '<%= item.half_price %>', '<%= item.description %>', '<%= item.available %>', '<%= item.image %>')">
+															<i class="fa-regular fa-pen-to-square"></i>
+														</a> | 
+														<a href="/menu/delete-menu/<%= item._id %>" onclick="return confirm('Are you sure you want to delete this item?');">
+															<i class="fa-solid fa-trash"></i>
+														</a>													</td>
+													
+												<td><a href="/admin/item-reviews/<%= item._id %>">Reviews</a></td>
+													</tr>
+												
+											  <% }); %>
+										</tbody>
+										
+									</table>								</div>
+								<div class="card-body">
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</main>
+			<script>
+				document.querySelector('input[type="file"]').addEventListener('change', function(e) {
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    document.querySelector('#add-image').src = e.target.result;
+  };
+  reader.readAsDataURL(this.files[0]);
+});
+
+			</script>
+			<script src="/public/Admin/js/AddMenu.js"></script>
+
+			<%- include('../layouts/footer1') %>

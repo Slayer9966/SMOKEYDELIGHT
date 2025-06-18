@@ -1,0 +1,144 @@
+<%- include('../layouts/header1') %>
+
+
+
+			<main class="content">
+					<!-- Modals -->
+<!-- Add Worker Modal -->
+<div class="modal fade" id="AddModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add Worker</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="addWorkerForm" action="/worker/create" method="post">
+                    <input required type="text" class="form-control" placeholder="Name" name="name">
+                    <br>
+                    <input required type="number" class="form-control" placeholder="Phone" name="phone">
+                    <br>
+                    <input required type="email" class="form-control" placeholder="Email" name="email">
+                    <br>
+                    <select required class="form-select mb-3" name="isVerified">
+                        <option value="">Select Verified</option>
+                        <option value="verified">Verified</option>
+                        <option value="not verified">Not Verified</option>
+                    </select>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Add Worker</button>
+            </div>
+                </form>
+        </div>
+    </div>
+</div>
+
+<!-- End Add Worker Modal -->
+
+<!-- Update Modal -->
+<!-- Update Worker Modal -->
+<div class="modal fade" id="UpdateModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Update Item</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="updateForm" action="/worker/update-worker" method="post" enctype="multipart/form-data">
+                    <input type="hidden" name="workerId" id="updateId">
+                    <input required type="text" class="form-control" id="updateName" placeholder="Name" name="name" required>
+                    <br>
+                    <input required type="number" class="form-control" id="updatePhone" placeholder="UpdatePhone" name="phone" required>
+                    <br>
+                    <input required type="email" class="form-control" id="updateEmail" placeholder="UpdateEmail" name="email" required>
+                   
+                    <br>
+                    <select required class="form-select mb-3" id="updateVerified" name="verified" required>
+                        <option value="">Select Verified</option>
+                        <option value="verified">Verified</option>
+                        <option value="Not Verified">Not Verified</option>
+                    </select>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Update Menu Item</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- End Update Worker Modal -->
+
+<!-- End Update Modal -->
+
+	<!-- Modals End -->
+				
+				<div class="container-fluid p-0">
+
+					<h1 class="h3 mb-3">Menu</h1>
+					
+					
+					<button type="button" data-bs-toggle="modal" data-bs-target="#AddModal" style="width: 200px;height:40px;" class="btn btn-primary">
+						Add Worker <i class="fa-solid fa-user" style="font-size: large;"></i>
+					</button>
+					<br>
+<br>
+					<div class="row">
+						<div class="col-12">
+							<div class="card">
+								<div class="card-header">
+									<table id="example" class="table table-striped" style="width:100%">
+										<thead>
+											<tr>
+												<th> Name</th>
+      <th>Email</th>
+      <th>Phone</th>
+      <th>Verfied</th>
+      <th>Date Added</th>
+	  <th>Action</th>
+											</tr>
+										</thead>
+										<tbody>
+											
+											<% workers.forEach(function(item) { %>
+												<tr>
+												  <td data-name="%= item.name %>"><%= item.name %></td>
+												  <td data-desciption="<%= item.description %>"><%= item.email %></td>
+												  <td data-hprice="<%= item.half_price %>">$<%= item.phone %></td>
+												  <td data-avail="<%= item.isVerified ? 'Yes' : 'No' %>"><%= item.isVerified ? 'Yes' : 'No' %></td>
+												 
+																								  
+													<td><%= item.createdAt.toDateString() %></td>
+													<td>
+														<a href="#" onclick="populateUpdateModal('<%= item._id %>', '<%= item.name %>', '<%= item.email %>', '<%= item.phone %>')">
+															<i class="fa-regular fa-pen-to-square"></i>
+														</a> | 
+														<a href="/worker/delete-worker/<%= item._id %>" onclick="return confirm('Are you sure you want to delete this item?');">
+															<i class="fa-solid fa-trash"></i>
+														</a>													</td>
+													
+												</tr>
+												
+											  <% }); %>
+										</tbody>
+										
+									</table>								</div>
+								<div class="card-body">
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</main>
+			
+			<script src="/public/Admin/js/AddEmployee.js"></script>
+
+			<%- include('../layouts/footer1') %>

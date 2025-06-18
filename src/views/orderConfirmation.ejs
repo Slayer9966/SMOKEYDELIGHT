@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirm Your Order</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Additional styling to center content */
+        body, html {
+            height: 100%;
+            margin: 0;
+        }
+
+        .centered-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; /* Full height */
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="centered-container">
+        <% if (order.confirmed) { %>
+            <h1>This order is already confirmed.</h1>
+        <% } else { %>
+            <h1>Please confirm your order by clicking the button below</h1>
+            <form action="/order/confirm-order" method="post">
+                <input type="hidden" value="<%= orderId %>" name="orderId">
+                <button type="submit" class="btn btn-primary mt-3">Confirm Order</button>
+            </form>
+        <% } %>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

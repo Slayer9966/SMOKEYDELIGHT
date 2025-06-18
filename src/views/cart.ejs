@@ -1,0 +1,107 @@
+<%- include('layouts/header') %>
+<!-- Modal -->
+<!-- Success Modal -->
+
+  <!--End success modal  -->
+  
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document"> <!-- Added modal-dialog-centered -->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Delivery Details</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+               <form action="/order/create" method="post">
+                <input required type="text" class="form-control" placeholder="Delivery Address" name="delivery_address">
+                <br>
+                <input required type="number" class="form-control" placeholder="Phone" name="phone">
+                <br>
+                <input required type="email" class="form-control" placeholder="Email" name="email">
+              
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Confirm Order</button>
+            </div>
+        </form>
+        </div>
+    </div>
+</div>
+
+<!-- End Modal -->
+
+<div class="container-xxl py-5 bg-dark hero-header mb-5">
+    <div class="container text-center my-5 pt-5 pb-4">
+        <h1 class="display-3 text-white mb-3 animated slideInDown">Cart</h1>
+    </div>
+</div>
+<section class="h-100">
+    <div class="container h-100 py-5">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-10">
+            <% if (cartItems.length === 0) { %>
+                <div class="alert alert-warning text-center">
+                    <strong>Your cart is empty.</strong>
+                </div>
+            <% } else { %>
+            <% cartItems.forEach(function(item) { %>
+                <div class="card rounded-3 mb-4" id="item-<%= item.itemId %>-<%= item.p_quantity %>">
+                    <div class="card-body p-4">
+                        <input type="hidden" value="<%= item.singleprice %>" id="price-<%=item.itemId%>-<%=item.p_quantity%>" >
+                        <div class="row d-flex justify-content-between align-items-center">
+                            <div class="col-md-2 col-lg-2 col-xl-2">
+                                <img src="<%= item.image %>" class="img-fluid rounded-3" alt="<%= item.name %>">
+                            </div>
+                            <div class="col-md-3 col-lg-3 col-xl-3">
+                                <p class="lead fw-normal mb-2"><%= item.name %></p>
+                                <p><span class="text-muted">Size: </span><%= item.p_quantity %></p>
+                            </div>
+                            <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
+                                <button data-mdb-button-init data-mdb-ripple-init class="btn btn-link px-2"
+                                    onclick="updateQuantity('<%= item.itemId %>', 'decrease','<%= item.p_quantity %>')">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                
+                                <input id="quantity-<%= item.itemId %>-<%= item.p_quantity%>" min="0" name="quantity" value="<%= item.quantity %>" type="number"
+                                    class="form-control form-control-sm" />
+                
+                                <button data-mdb-button-init data-mdb-ripple-init class="btn btn-link px-2"
+                                    onclick="updateQuantity('<%= item.itemId %>', 'increase','<%= item.p_quantity %>')">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                            <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
+                                <h5 class="mb-0" id="amount-<%= item.itemId %>-<%= item.p_quantity %>">$<%= item.amount %></h5>
+                            </div>
+                            <div class="col-md-1 col-lg-1 col-xl-1 text-end">
+                                <a href="javascript:void(0);" class="text-danger" onclick="deleteCartItem('<%= item.itemId %>', '<%= item.p_quantity %>')">
+                                    <i class="fas fa-trash fa-lg"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <% }); %>
+
+            <div class="card">
+                <div class="card-body d-flex justify-content-between align-items-center">
+                    
+                    
+                    <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-primary btn-block btn-lg">Confirm Order</button>
+                    <h5 id="subtotal" class="mb-0">Subtotal: $<%= totalAmount.toFixed(2) %></h5>
+                </div>
+            </div>
+          <% } %>
+
+        </div>
+      </div>
+    </div>
+</section>
+
+
+  <script src="/public/js/cartPage.js"></script>
+  
+  <%- include('layouts/footer') %>

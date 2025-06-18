@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="description" content="Responsive Admin &amp; Dashboard Template based on Bootstrap 5">
+	<meta name="author" content="AdminKit">
+	<meta name="keywords" content="adminkit, bootstrap, bootstrap 5, admin, dashboard, template, responsive, css, sass, html, theme, front-end, ui kit, web">
+<!-- Bootstrap JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link rel="shortcut icon" href="/public/Admin/img/icons/icon-48x48.png" />
+
+	<link rel="canonical" href="https://demo-basic.adminkit.io/charts-chartjs.html" />
+
+	<title>Chart.js | AdminKit Demo</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/2.1.7/css/dataTables.bootstrap5.css">	
+<link href="/public/Admin/css/app.css" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+
+<body>
+	
+	<div class="wrapper">
+		<nav id="sidebar" class="sidebar js-sidebar">
+			<div class="sidebar-content js-simplebar">
+				<a class="sidebar-brand" href="index.html">
+          <span class="align-middle">SmokyDelights</span>
+        </a>
+
+				<ul class="sidebar-nav">
+					<li class="sidebar-header">
+						Pages
+					</li>
+
+					<li class="sidebar-item">
+						<a class="sidebar-link" href="/admin/dashboard/">
+              <i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Dashboard</span>
+            </a>
+					</li>
+
+					<li class="sidebar-item">
+						<a class="sidebar-link" href="/admin/menu">
+							<i class="fa-solid fa-bowl-food align-middle" ></i> <span class="align-middle">Menu Items</span>
+            </a>
+					</li>
+					<li class="sidebar-item">
+						<a class="sidebar-link" href="/admin/categories">
+              <i class="align-middle" data-feather="book"></i> <span class="align-middle">Categories</span>
+            </a>
+					</li>
+					<li class="sidebar-item">
+						<a class="sidebar-link" href="/admin/employees">
+              <i class="align-middle" data-feather="user-plus"></i> <span class="align-middle">Employees</span>
+            </a>
+					</li>
+
+					<li class="sidebar-item">
+						<a class="sidebar-link" href="/admin/customer-reviews">
+               <i class="align-middle fa-regular fa-star"></i><span class="align-middle">Store Reviews</span>
+            </a>
+					</li>
+
+					
+
+					<li class="sidebar-header">
+						Orders
+					</li>
+
+					<li class="sidebar-item">
+						<a class="sidebar-link" href="/admin/pending-orders">
+							<i class="fa-regular align-middle fa-clock"></i> <span class="align-middle">Pending Orders</span>
+            </a>
+					</li>
+
+					<li class="sidebar-item">
+						<a class="sidebar-link" href="/admin/completed-orders">
+              <i class="align-middle" data-feather="check-square"></i> <span class="align-middle">Completed Orders</span>
+            </a>
+					</li>
+
+					<li class="sidebar-item">
+						<a class="sidebar-link" href="/admin/cancelled-orders">
+							<i class="align-middle fa-solid fa-xmark"></i> <span class="align-middle">Cancelled Orders</span>
+            </a>
+					</li>
+
+					<li class="sidebar-item">
+						<a class="sidebar-link" href="/admin/out-for-delivery-orders">
+							<i class="align-middle fa-solid fa-truck"></i> <span class="align-middle">Out For Delivery</span>
+            </a>
+					</li>
+
+					<li class="sidebar-item">
+						<a class="sidebar-link" href="/admin/unconfirmed-orders">
+							<i class="align-middle fa-solid fa-xmark"></i> <span class="align-middle">Unconfirmed</span>
+            </a>
+					</li>
+
+					
+			</div>
+		</nav>
+		<div class="main">
+			<nav class="navbar navbar-expand navbar-light navbar-bg">
+				<a class="sidebar-toggle js-sidebar-toggle">
+          <i class="hamburger align-self-center"></i>
+        </a>
+
+				<div class="navbar-collapse collapse">
+					<ul class="navbar-nav navbar-align">
+						<li class="nav-item dropdown">
+							<a class="nav-icon dropdown-toggle" href="#" id="alertsDropdown" data-bs-toggle="dropdown">
+							  <div class="position-relative">
+								<i class="align-middle" data-feather="bell"></i>
+								<span class="indicator" id="notification-count"></span>
+							  </div>
+							</a>
+							<div class="dropdown-menu dropdown-menu-lg dropdown-menu-end py-0" aria-labelledby="alertsDropdown">
+							  <div class="dropdown-menu-header">
+								<span id="notification-title">New Notifications</span>
+							  </div>
+							  <div class="list-group" id="notifications-list">
+								<!-- Notifications will be appended here -->
+							  </div>
+							  <div class="dropdown-menu-footer">
+								<a href="#" class="text-muted">Show all notifications</a>
+							  </div>
+							</div>
+						  </li>
+						
+						<li class="nav-item dropdown">
+							<a class="nav-icon dropdown-toggle d-inline-block d-sm-none" href="#" data-bs-toggle="dropdown">
+                <i class="align-middle" data-feather="settings"></i>
+              </a>
+
+							<a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-bs-toggle="dropdown">
+                 <span class="text-dark">Charles Hall</span>
+              </a>
+							<div class="dropdown-menu dropdown-menu-end">
+								
+								<a class="dropdown-item" href="/auth/logout">Log out</a>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</nav>
+			<script src="/socket.io/socket.io.js"></script>
+<script>
+  const socket = io(); // Connect to the Socket.io server
+  console.log('Script is running on the current page');
+
+  // Function to add a notification item to the list
+  function addNotification(notification) {
+    const list = document.getElementById('notifications-list');
+    const count = document.getElementById('notification-count');
+    // Create a new notification item
+    const item = document.createElement('div');
+    item.classList.add('list-group-item', 'd-flex', 'justify-content-between', 'align-items-center');
+
+    // Add inner HTML with a Read button
+    item.innerHTML = `
+      <div>
+		        <div class="text-dark">${notification._id}</div>
+
+        <div class="text-dark">${notification.message}</div>
+        <div class="text-muted small mt-1">${new Date(notification.createdAt).toLocaleString()}</div>
+      </div>
+      <button class="btn btn-sm btn-secondary read-button">Read</button>
+    `;
+    list.appendChild(item);
+
+    // Find the read button within the created item
+    const readButton = item.querySelector('.read-button');
+
+    // Add click event listener to the Read button
+    readButton.addEventListener('click', () => {
+      console.log('Read button clicked!'); // Check if this is logged
+      // Remove the notification from the DOM
+      list.removeChild(item);
+      
+      // Decrement the notification count
+      count.textContent = parseInt(count.textContent) - 1;
+
+      // Call function to mark notification as read
+      markNotificationAsRead(notification);
+    });
+  }
+
+  // Function to mark notification as read
+  function markNotificationAsRead(notification) {
+    fetch('/mark-notification-read', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ id: notification._id }), // Send the correct ID
+    }).then(response => {
+      if (!response.ok) {
+        console.error('Failed to mark notification as read');
+      }
+    }).catch(error => {
+      console.error('Error marking notification as read:', error);
+    });
+  }
+
+  // Fetch initial notifications
+  fetch('/get-notifications')
+    .then(response => response.json())
+    .then(notifications => {
+      const count = document.getElementById('notification-count');
+      count.textContent = notifications.length;
+
+      notifications.forEach(notification => {
+        addNotification(notification);
+      });
+    });
+
+  // Listen for new notifications from the server
+  socket.on('newNotification', (notification) => {
+    console.log('New notification received:', notification);
+    const count = document.getElementById('notification-count');
+    // Increment the notification count
+    count.textContent = parseInt(count.textContent) + 1;
+
+    // Add the new notification
+    addNotification(notification);
+  });
+</script>
+
+			  

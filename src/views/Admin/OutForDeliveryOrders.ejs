@@ -1,0 +1,105 @@
+<%- include('../layouts/header1') %>
+
+
+
+			<main class="content">
+					
+				
+				<div class="container-fluid p-0">
+
+					<h1 class="h3 mb-3">Pending Orders</h1>
+					
+					
+					
+					<br>
+<br>
+					<div class="row">
+						<div class="col-12">
+							<div class="card">
+								<div class="card-header table-responsive">
+									<table id="example" class="table table-striped" style="width:100%">
+										<thead>
+											<tr>
+												<th> Order # </th>
+      <th>Amount</th>
+      <th>Delivery Address</th>
+      <th>Phone</th>
+	  <th>Email</th>
+      <th>Rider</th>
+	  
+	  <th>Order Status</th>
+	  <th>Confirmed</th>
+	  <th>Created At</th>
+	  <th>Items</th>
+	  <th>Action</th>
+											</tr>
+										</thead>
+										<tbody>
+											
+											<% orders.forEach(function(item) { %>
+												<tr>
+												  <td ><%= item.order_number %></td>
+												  <td >Rs.<%= item.order_amount %></td>
+												  <td ><%= item.delivery_address %></td>
+
+												  <td ><%= item.phone %></td>
+												  <td ><%= item.email %></td>
+												  <td>
+													<form action="/order/assign-rider" method="POST">
+														<input type="hidden" name="orderId" value="<%= item._id %>" />
+
+														<select name="riderId" style="border: none;">
+															<option value="">Assign Rider</option>
+															<% riders.forEach(function(rider) { %>
+																<option value="<%= rider._id.toString() %>" <%= item.rider && item.rider._id.toString() === rider._id.toString() ? 'selected' : '' %>>
+																	<%= rider.name %>
+																</option>
+															<% }); %>
+														</select>
+														<br>
+														<br>
+														<button type="submit" class="btn btn-primary">Assign</button>
+													</form>
+													</td>
+												  <td>
+													<form action="/order/update-order-status" method="POST">
+														<input type="hidden" name="orderId" value="<%= item._id %>" />
+														<select name="newStatus" style="border: none;">
+															<option value="pending" <%= item.order_status === 'pending' ? 'selected' : '' %>>Pending</option>
+															<option value="outForDelivery" 
+															<%= item.rider === null ? 'disabled' : '' %> 
+															<%= item.order_status === 'outForDelivery' ? 'selected' : '' %>>
+															Out for Delivery
+														</option>															<option value="completed" <%= item.order_status === 'completed' ? 'selected' : '' %>>Completed</option>
+															<option value="cancelled" <%= item.order_status === 'cancelled' ? 'selected' : '' %>>Cancelled</option>
+														</select>
+														<br>
+														<br>
+														<button type="submit" class="btn btn-primary">Update</button>
+													</form>
+												</td>												  
+												  <td ><%= item.confirmed ? 'Yes' : 'No' %></td>
+												 
+																								  
+													<td><%= item.createdAt.toDateString() %></td>
+													<td><a href="/admin/order-items/<%= item._id %>" style="cursor:pointer;"><button class="btn btn-primary">Order Items</button></a></td>
+													<td><a href="/order/delete/<%= item._id %>" onclick="return confirm('Are you sure you want to delete this item?');">
+														<i class="fa-solid fa-trash"></i>
+													</a></td>
+												</tr>
+												
+											  <% }); %>
+										</tbody>
+										
+									</table>								</div>
+								<div class="card-body">
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</main>
+			
+
+			<%- include('../layouts/footer1') %>

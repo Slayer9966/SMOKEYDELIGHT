@@ -1,0 +1,82 @@
+<%- include('layouts/header') %>
+
+<!-- Hero Start -->
+<div class="container-xxl py-5 bg-dark hero-header mb-5">
+    <div class="container text-center my-5 pt-5 pb-4">
+        <h1 class="display-3 text-white mb-3 animated slideInDown">Food Menu</h1>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb justify-content-center text-uppercase">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item"><a href="#">Pages</a></li>
+                <li class="breadcrumb-item text-white active" aria-current="page">Menu</li>
+            </ol>
+        </nav>
+    </div>
+</div>
+<!-- Hero End -->
+
+<!-- Menu Start -->
+<!-- Category Navigation Start -->
+<div class="tab-class text-center wow fadeInUp" data-wow-delay="0.1s">
+    <ul class="nav nav-pills d-inline-flex justify-content-center border-bottom mb-5">
+        <!-- 'All' Option -->
+        <li class="nav-item">
+            <a class="d-flex align-items-center text-start mx-3 ms-0 pb-3 active" data-bs-toggle="pill" href="#" onclick="filterItems('all')">
+                <i class="fa fa-list fa-2x text-primary"></i>
+                <div class="ps-3">
+                    <h2 class="mt-n1 mb-0">All</h2>
+                </div>
+            </a>
+        </li>
+        <% categories.forEach(function(item) { %>
+            <li class="nav-item">
+                <a class="d-flex align-items-center text-start mx-3 ms-0 pb-3" data-bs-toggle="pill" href="#" onclick="filterItems('<%= item._id %>')">
+                    <i class="fa fa-coffee fa-2x text-primary"></i>
+                    <div class="ps-3">
+                        <h2 class="mt-n1 mb-0"><%= item.name %></h2>
+                    </div>
+                </a>
+            </li>
+        <% }); %>
+    </ul>
+</div>
+
+<!-- Menu Items Section -->
+<div class="container">
+    <div class="row justify-content-center" id="menu-items">
+        <% menuItems.forEach(function(item) { %>
+            <% if (item.category && item.category._id) { %>
+                <div class="col-md-3 col-sm-6 menu-item" data-category="<%= item.category._id %>">
+                    <div class="product-wrapper mb-45 text-center">
+                        <div class="product-img" style="width:300px;">
+                            <a href="/product/<%=item._id%>" data-abc="true"> 
+                                <img src="/uploads/<%= item.image %>" width="100%" alt="Image">
+                            </a> 
+                            <span><i class="fa fa-rupee"></i> <%= item.full_price %></span>
+                            <div class="product-action">
+                                <div class="product-action-style">
+                                    <a class="action-plus" title="Quick View" data-toggle="modal" data-target="#exampleModal" href="#" data-abc="true">
+                                        <i class="fa fa-plus"></i>
+                                    </a>
+                                    <a class="action-heart" title="Wishlist" href="#" data-abc="true">
+                                        <i class="fa fa-heart"></i>
+                                    </a>
+                                    <a class="action-cart" title="Add To Cart" href="#" data-abc="true">
+                                        <i class="fa fa-shopping-cart"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <% } %>
+        <% }); %>
+    </div>
+</div>
+<!-- Menu End -->
+
+<!-- JavaScript for Filtering -->
+<script src="/public/js/menuPage.js"></script>
+
+<!-- Footer Start -->
+<%- include('layouts/footer') %>

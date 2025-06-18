@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Items - Order #<%= orderNumber %></title>
+    <style>
+        body {
+            background-color: #f4f4f4;
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .receipt-container {
+            background-color: white;
+            padding: 20px;
+            width: 400px;
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            text-align: center;
+            position: relative;
+        }
+
+        .receipt-header {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+
+        .receipt-details {
+            font-size: 16px;
+            color: #555;
+            line-height: 1.6;
+            text-align: left; /* Align text to the left for better readability */
+        }
+
+        .receipt-details .item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .receipt-total {
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 20px;
+            padding-top: 10px;
+            border-top: 1px solid #eee;
+        }
+
+        .receipt-footer {
+            margin-top: 30px;
+            font-size: 14px;
+            color: #888;
+        }
+
+        .button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+
+        .button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+<div class="receipt-container">
+    <div class="receipt-header">
+        Order Items for Order #<%= orderNumber %>
+    </div>
+
+    <div class="receipt-details">
+        <% if (orderItems.length) { %>
+            <% orderItems.forEach(function(orderItem) { %>
+				<div class="item">
+					<span><%= orderItem.item.name %></span> <!-- Access the item's name -->
+					<span>Quantity: <%= orderItem.quantity %></span>
+					<span>Rs. <%= orderItem.amount %></span>
+				</div>
+			<% }); %>
+        <% } else { %>
+            <div class="item">
+                <span>No items found for this order.</span>
+            </div>
+        <% } %>
+    </div>
+
+    <div class="receipt-footer">
+        <button class="button" onclick="window.print()">Print Receipt</button>
+        <div>Thank you for your purchase!</div>
+    </div>
+</div>
+
+</body>
+</html>
