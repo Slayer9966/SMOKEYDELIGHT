@@ -101,4 +101,4 @@ Licensed under the **MIT License** — use, modify, and distribute freely.
 **Syed Muhammad Faizan Ali**  
 📍 Islamabad, Pakistan  
 📧 faizandev666@gmail.com  
-🔗 [GitHub](https://github.com/Slayer9966) | [LinkedIn](https://www.linkedin.com/in/faizan-ali-7b4275297/)
+🔗 [GitHub](https://github.com/Slayer9966) | [LinkedIn](https://www.linkedin.com/posts/faizan-ali-7b4275297_mernstack-webdevelopment-realtimeupdates-activity-7250550573509361665-D179?utm_source=share&utm_medium=member_desktop&rcm=ACoAAEfDpTgBZMmz-8LKpOQTMYhhO24GPrIrPTI)
